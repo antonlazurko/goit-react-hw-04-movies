@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/goit-react-hw-04-hooks-phonebook/static/css/main.31ef0d4a.chunk.css",
-    "main.js": "/goit-react-hw-04-hooks-phonebook/static/js/main.3e756b02.chunk.js",
-    "main.js.map": "/goit-react-hw-04-hooks-phonebook/static/js/main.3e756b02.chunk.js.map",
-    "runtime-main.js": "/goit-react-hw-04-hooks-phonebook/static/js/runtime-main.9f60e555.js",
-    "runtime-main.js.map": "/goit-react-hw-04-hooks-phonebook/static/js/runtime-main.9f60e555.js.map",
-    "static/js/2.e283c03a.chunk.js": "/goit-react-hw-04-hooks-phonebook/static/js/2.e283c03a.chunk.js",
-    "static/js/2.e283c03a.chunk.js.map": "/goit-react-hw-04-hooks-phonebook/static/js/2.e283c03a.chunk.js.map",
-    "index.html": "/goit-react-hw-04-hooks-phonebook/index.html",
-    "static/css/main.31ef0d4a.chunk.css.map": "/goit-react-hw-04-hooks-phonebook/static/css/main.31ef0d4a.chunk.css.map",
-    "static/js/2.e283c03a.chunk.js.LICENSE.txt": "/goit-react-hw-04-hooks-phonebook/static/js/2.e283c03a.chunk.js.LICENSE.txt"
+    "main.css": "/static/css/main.8e1a036d.chunk.css",
+    "main.js": "/static/js/main.5f9a60c4.chunk.js",
+    "main.js.map": "/static/js/main.5f9a60c4.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.6eff09ac.js",
+    "runtime-main.js.map": "/static/js/runtime-main.6eff09ac.js.map",
+    "static/js/2.d2ee86b6.chunk.js": "/static/js/2.d2ee86b6.chunk.js",
+    "static/js/2.d2ee86b6.chunk.js.map": "/static/js/2.d2ee86b6.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.8e1a036d.chunk.css.map": "/static/css/main.8e1a036d.chunk.css.map",
+    "static/js/2.d2ee86b6.chunk.js.LICENSE.txt": "/static/js/2.d2ee86b6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.9f60e555.js",
-    "static/js/2.e283c03a.chunk.js",
-    "static/css/main.31ef0d4a.chunk.css",
-    "static/js/main.3e756b02.chunk.js"
+    "static/js/runtime-main.6eff09ac.js",
+    "static/js/2.d2ee86b6.chunk.js",
+    "static/css/main.8e1a036d.chunk.css",
+    "static/js/main.5f9a60c4.chunk.js"
   ]
 }
