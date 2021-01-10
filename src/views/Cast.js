@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
-import { Route, useParams } from 'react-router-dom';
 
 import * as moviesAPI from '../services/movie-api';
 import Status from '../services/Status';
@@ -9,6 +7,7 @@ export default function Cast({ movieId }) {
   const [cast, setCast] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
+
   useEffect(() => {
     setStatus(Status.PENDING);
     moviesAPI

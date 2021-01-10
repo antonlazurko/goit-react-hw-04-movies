@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
 import Status from '../services/Status';
 
 export default function HomeView() {
-  // const { url } = useRouteMatch();
   const [movies, setMovies] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
@@ -23,7 +22,6 @@ export default function HomeView() {
         }
       })
       .catch(error => {
-        console.log(error);
         setError(error);
         setStatus(Status.REJECTED);
       });
@@ -50,22 +48,4 @@ export default function HomeView() {
       )}
     </>
   );
-
-  // if (status === Status.PENDING) {return <h1>Download movie's collection</h1>}
-  // if (status === Status.REJECTED) {return <h1>Error!!!</h1>}
-
-  // if (status === Status.RESOLVED) {
-  //   return (
-  //     (
-  // <>
-  //   <p>Trending this week</p>
-  //   <ul>
-  //     {movies &&
-  //       movies.map(movie => <li key={movie.id}>{movie.name}</li>)}
-  //     <li></li>
-  //   </ul>
-  // </>
-  //     )
-  //   );
-  // }
 }

@@ -1,12 +1,17 @@
-import { useState, useEffect } from 'react';
-import { Route, useParams } from 'react-router-dom';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { Route, useParams, useLocation, useHistory } from 'react-router-dom';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import NotFoundView from '../views/NotFoundView';
 
 import * as moviesAPI from '../services/movie-api';
-import Cast from './Cast';
-import Reviews from './Reviews';
 import Status from '../services/Status';
+
+const NotFoundView = lazy(() =>
+  import('../views/NotFoundView.js' /*webpackChunkName: "NotFoundView" */),
+);
+const Cast = lazy(() => import('./Cast.js' /*webpackChunkName: "Cast" */));
+const Reviews = lazy(() =>
+  import('./Reviews.js' /*webpackChunkName: "Reviews" */),
+);
 
 export default function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
@@ -15,6 +20,16 @@ export default function MovieDetailsPage() {
 
   const { movieId } = useParams();
   const { url, path } = useRouteMatch();
+  const history = useHistory();
+  const location = useLocation();
+  const handleGoBack = () => {
+    if (location.state && location.state.from) {
+      history.push(location.state.from);
+      return;
+    }
+    history.push((location.state = '/movies'));
+  };
+
   useEffect(() => {
     setStatus(Status.PENDING);
     moviesAPI
@@ -31,10 +46,10 @@ export default function MovieDetailsPage() {
   return (
     <>
       {status === Status.PENDING && <p>Download movie</p>}
-      {status === Status.REJECTED && <NotFoundView />}
+      {status === Status.REJECTED && <NotFoundView error={error} />}
       {status === Status.RESOLVED && (
         <>
-          <button>Go back</button>
+          <button onClick={handleGoBack}>Go back</button>
           <h1>{movie.title}</h1>
           {movie.poster_path && (
             <img
@@ -47,12 +62,14 @@ export default function MovieDetailsPage() {
             Reviews of "{movie.title}" movie
           </NavLink>
           <hr />
-          <Route path={`${path}/Cast`}>
-            <Cast movieId={movieId} />
-          </Route>
-          <Route path={`${path}/Reviews`}>
-            <Reviews movieId={movieId} />
-          </Route>
+          <Suspense fallback={<div>Downloading...</div>}>
+            <Route path={`${path}/Cast`}>
+              <Cast movieId={movieId} />
+            </Route>
+            <Route path={`${path}/Reviews`}>
+              <Reviews movieId={movieId} />
+            </Route>
+          </Suspense>
         </>
       )}
     </>

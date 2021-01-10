@@ -1,19 +1,25 @@
 import { useState, useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import * as moviesAPI from '../services/movie-api';
 import Searchbar from '../Components/Searchbar';
 import Status from '../services/Status';
 
 export default function MoviesView() {
-  const { url } = useRouteMatch();
-  const [movieQuery, setMovieQuery] = useState('');
+  const history = useHistory();
+  const location = useLocation();
+
+  const [movieQuery, setMovieQuery] = useState(
+    new URLSearchParams(location.search).get('query') ?? '',
+  );
   const [movies, setMovies] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
 
   const onSearchbarSubmit = data => {
+    history.push({ ...location, search: `query=${data}` });
     setMovieQuery(data);
   };
   useEffect(() => {
@@ -44,7 +50,14 @@ export default function MoviesView() {
         <ul>
           {movies.map(movie => (
             <li key={movie.id}>
-              <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+              <Link
+                to={{
+                  pathname: `/movies/${movie.id}`,
+                  state: { from: location },
+                }}
+              >
+                {movie.title}
+              </Link>
             </li>
           ))}
         </ul>
