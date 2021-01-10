@@ -7,8 +7,8 @@
     "HomeView.js": "/static/js/HomeView.3c8037e4.chunk.js",
     "HomeView.js.map": "/static/js/HomeView.3c8037e4.chunk.js.map",
     "MovieDetailsPage.css": "/static/css/MovieDetailsPage.30ae79f2.chunk.css",
-    "MovieDetailsPage.js": "/static/js/MovieDetailsPage.5a356064.chunk.js",
-    "MovieDetailsPage.js.map": "/static/js/MovieDetailsPage.5a356064.chunk.js.map",
+    "MovieDetailsPage.js": "/static/js/MovieDetailsPage.3ee171bd.chunk.js",
+    "MovieDetailsPage.js.map": "/static/js/MovieDetailsPage.3ee171bd.chunk.js.map",
     "MoviesView.css": "/static/css/MoviesView.37967b83.chunk.css",
     "MoviesView.js": "/static/js/MoviesView.723ef839.chunk.js",
     "MoviesView.js.map": "/static/js/MoviesView.723ef839.chunk.js.map",
@@ -20,8 +20,8 @@
     "main.css": "/static/css/main.a4eb07be.chunk.css",
     "main.js": "/static/js/main.1106c374.chunk.js",
     "main.js.map": "/static/js/main.1106c374.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c8ad0b03.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c8ad0b03.js.map",
+    "runtime-main.js": "/static/js/runtime-main.17b791b7.js",
+    "runtime-main.js.map": "/static/js/runtime-main.17b791b7.js.map",
     "static/js/8.82b62670.chunk.js": "/static/js/8.82b62670.chunk.js",
     "static/js/8.82b62670.chunk.js.map": "/static/js/8.82b62670.chunk.js.map",
     "static/css/9.ccc6f86f.chunk.css": "/static/css/9.ccc6f86f.chunk.css",
@@ -38,7 +38,7 @@
     "static/js/8.82b62670.chunk.js.LICENSE.txt": "/static/js/8.82b62670.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.c8ad0b03.js",
+    "static/js/runtime-main.17b791b7.js",
     "static/js/8.82b62670.chunk.js",
     "static/css/main.a4eb07be.chunk.css",
     "static/js/main.1106c374.chunk.js"
