@@ -4,6 +4,7 @@ import { NavLink, useRouteMatch } from 'react-router-dom';
 
 import * as moviesAPI from '../services/movie-api';
 import Status from '../services/Status';
+import s from '../views/MovieDetailsPage.module.css';
 
 const NotFoundView = lazy(() =>
   import('../views/NotFoundView.js' /*webpackChunkName: "NotFoundView" */),
@@ -49,16 +50,21 @@ export default function MovieDetailsPage() {
       {status === Status.REJECTED && <NotFoundView error={error} />}
       {status === Status.RESOLVED && (
         <>
-          <button onClick={handleGoBack}>Go back</button>
+          <button onClick={handleGoBack} className={s.goBackBtn}>
+            Go back
+          </button>
           <h1>{movie.title}</h1>
           {movie.poster_path && (
             <img
+              className={s.image}
               src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
               alt={movie.title}
             />
           )}
-          <NavLink to={`${url}/Cast`}>Cast of "{movie.title}" movie</NavLink>
-          <NavLink to={`${url}/Reviews`}>
+          <NavLink to={`${url}/Cast`} className={s.Cast}>
+            Cast of "{movie.title}" movie
+          </NavLink>
+          <NavLink to={`${url}/Reviews`} className={s.Reviews}>
             Reviews of "{movie.title}" movie
           </NavLink>
           <hr />

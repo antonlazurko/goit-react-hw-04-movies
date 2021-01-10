@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
 import Status from '../services/Status';
+import s from '../views/HomeView.module.css';
 
 export default function HomeView() {
   const [movies, setMovies] = useState(null);
@@ -33,12 +34,12 @@ export default function HomeView() {
       {status === Status.REJECTED && <p>{error}</p>}
       {status === Status.RESOLVED && (
         <>
-          <p>Trending this week</p>
-          <ul>
+          <h1 className={s.title}>Trending this week</h1>
+          <ul className={s.list}>
             {movies &&
               movies.map(movie => (
-                <li key={movie.id}>
-                  <Link to={`movies/${movie.id}`}>
+                <li key={movie.id} className={s.item}>
+                  <Link to={`movies/${movie.id}`} className={s.name}>
                     {movie.name ?? movie.title}
                   </Link>
                 </li>

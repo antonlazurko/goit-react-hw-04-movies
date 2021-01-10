@@ -1,0 +1,8 @@
+.list{list-style: none;}
+.item{
+    margin-bottom: 10px;
+    }
+    .title{text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+}

@@ -6,6 +6,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
 import Searchbar from '../Components/Searchbar';
 import Status from '../services/Status';
+import s from '../views/MoviesView.module.css';
 
 export default function MoviesView() {
   const history = useHistory();
@@ -47,10 +48,11 @@ export default function MoviesView() {
       {status === Status.REJECTED && <p>{error}</p>}
 
       {status === Status.RESOLVED && (
-        <ul>
+        <ul className={s.list}>
           {movies.map(movie => (
-            <li key={movie.id}>
+            <li key={movie.id} className={s.item}>
               <Link
+                className={s.title}
                 to={{
                   pathname: `/movies/${movie.id}`,
                   state: { from: location },
