@@ -1,13 +1,8 @@
 import { useState, useEffect } from 'react';
 
 import * as moviesAPI from '../services/movie-api';
+import Status from '../services/Status';
 
-const Status = {
-  IDLE: 'idle',
-  PENDING: 'pending',
-  RESOLVED: 'resolved',
-  REJECTED: 'rejected',
-};
 export default function Reviews({ movieId }) {
   const [reviews, setReviews] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);

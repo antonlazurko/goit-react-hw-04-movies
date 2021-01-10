@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Route, useParams } from 'react-router-dom';
 import { NavLink, useRouteMatch } from 'react-router-dom';
+import NotFoundView from '../views/NotFoundView';
 
 import * as moviesAPI from '../services/movie-api';
 import Cast from './Cast';
 import Reviews from './Reviews';
-const Status = {
-  IDLE: 'idle',
-  PENDING: 'pending',
-  RESOLVED: 'resolved',
-  REJECTED: 'rejected',
-};
+import Status from '../services/Status';
+
 export default function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
@@ -26,15 +23,15 @@ export default function MovieDetailsPage() {
         setMovie(movie);
         setStatus(Status.RESOLVED);
       })
-      .catch(error => {
-        setError(error);
+      .catch(Error => {
+        setError(Error);
         setStatus(Status.REJECTED);
       });
   }, [movieId]);
   return (
     <>
       {status === Status.PENDING && <p>Download movie</p>}
-      {status === Status.REJECTED && <p>{error}</p>}
+      {status === Status.REJECTED && <NotFoundView />}
       {status === Status.RESOLVED && (
         <>
           <button>Go back</button>

@@ -2,12 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
 import Searchbar from '../Components/Searchbar';
-const Status = {
-  IDLE: 'idle',
-  PENDING: 'pending',
-  RESOLVED: 'resolved',
-  REJECTED: 'rejected',
-};
+import Status from '../services/Status';
+
 export default function MoviesView() {
   const { url } = useRouteMatch();
   const [movieQuery, setMovieQuery] = useState('');

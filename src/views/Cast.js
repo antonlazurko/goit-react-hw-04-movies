@@ -3,12 +3,8 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { Route, useParams } from 'react-router-dom';
 
 import * as moviesAPI from '../services/movie-api';
-const Status = {
-  IDLE: 'idle',
-  PENDING: 'pending',
-  RESOLVED: 'resolved',
-  REJECTED: 'rejected',
-};
+import Status from '../services/Status';
+
 export default function Cast({ movieId }) {
   const [cast, setCast] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
