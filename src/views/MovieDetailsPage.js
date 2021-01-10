@@ -16,10 +16,8 @@ export default function MovieDetailsPage() {
   const [status, setStatus] = useState(Status.IDLE);
   const { movieId } = useParams();
   const { url, path } = useRouteMatch();
-  console.log(url);
   useEffect(() => {
     moviesAPI.fetchMovieDetails(movieId).then(movie => {
-      console.log(movie);
       setMovie(movie);
       setStatus(Status.RESOLVED);
     });
@@ -36,7 +34,7 @@ export default function MovieDetailsPage() {
               alt={movie.title}
             />
           )}
-          <NavLink to={`${url}/Cast`}>Cast of "{movie.title}" movie</NavLink>{' '}
+          <NavLink to={`${url}/Cast`}>Cast of "{movie.title}" movie</NavLink>
           <NavLink to={`${url}/Reviews`}>
             Reviews of "{movie.title}" movie
           </NavLink>

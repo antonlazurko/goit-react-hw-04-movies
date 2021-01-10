@@ -3,7 +3,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
 import Searchbar from '../Components/Searchbar';
 export default function MoviesView() {
-  const match = useRouteMatch();
+  const { url } = useRouteMatch();
   const [movieQuery, setMovieQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const onSearchbarSubmit = data => {
@@ -18,7 +18,7 @@ export default function MoviesView() {
       .then(({ results }) => setMovies(results));
   }, [movieQuery]);
   return (
-    console.log(match),
+    console.log(url),
     (
       <>
         <Searchbar onSearchbarSubmit={onSearchbarSubmit} />
@@ -26,7 +26,7 @@ export default function MoviesView() {
           <ul>
             {movies.map(movie => (
               <li key={movie.id}>
-                <Link to={`${match.url}/${movie.id}`}>{movie.title}</Link>
+                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
               </li>
             ))}
           </ul>
