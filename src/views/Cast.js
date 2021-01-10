@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import * as moviesAPI from '../services/movie-api';
 import Status from '../services/Status';
@@ -23,7 +24,6 @@ export default function Cast({ movieId }) {
   }, [movieId]);
   return (
     <>
-      {' '}
       {status === Status.PENDING && <p>Download cast</p>}
       {status === Status.REJECTED && <p>{error}</p>}
       {status === Status.RESOLVED && (
@@ -45,3 +45,6 @@ export default function Cast({ movieId }) {
     </>
   );
 }
+Cast.propTypes = {
+  movieId: PropTypes.string,
+};

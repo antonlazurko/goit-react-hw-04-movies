@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -39,6 +39,6 @@ export default function Searchbar({ onSearchbarSubmit }) {
   );
 }
 
-// Searchbar.propTypes = {
-//   onFormSubmit: PropTypes.func,
-// };
+Searchbar.propTypes = {
+  onFormSubmit: PropTypes.func,
+};
