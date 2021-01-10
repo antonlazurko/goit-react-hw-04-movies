@@ -1,19 +1,39 @@
 import { useState, useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
-import { Route, useParams } from 'react-router-dom';
 
 import * as moviesAPI from '../services/movie-api';
+
+const Status = {
+  IDLE: 'idle',
+  PENDING: 'pending',
+  RESOLVED: 'resolved',
+  REJECTED: 'rejected',
+};
 export default function Reviews({ movieId }) {
   const [reviews, setReviews] = useState([]);
+  const [status, setStatus] = useState(Status.IDLE);
+  const [error, setError] = useState('');
   useEffect(() => {
+    setStatus(Status.PENDING);
+
     moviesAPI
       .fetchMovieReviews(movieId)
-      .then(({ results }) => setReviews(results));
+      .then(({ results }) => {
+        setReviews(results);
+        setStatus(Status.RESOLVED);
+      })
+      .catch(error => {
+        setError(error);
+        setStatus(Status.REJECTED);
+      });
   }, [movieId]);
   return (
     <>
-      {reviews && (
+      {status === Status.PENDING && <p>Download movie reviews</p>}
+      {status === Status.REJECTED && <p>{error}</p>}
+
+      {status === Status.RESOLVED && (
         <ul>
+          {reviews.length === 0 && <p>There is no one review for this movie</p>}
           {reviews.map(review => (
             <li key={review.id}>
               {review.author}

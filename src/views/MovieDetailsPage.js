@@ -14,19 +14,30 @@ const Status = {
 export default function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
+  const [error, setError] = useState('');
+
   const { movieId } = useParams();
   const { url, path } = useRouteMatch();
   useEffect(() => {
-    moviesAPI.fetchMovieDetails(movieId).then(movie => {
-      setMovie(movie);
-      setStatus(Status.RESOLVED);
-    });
+    setStatus(Status.PENDING);
+    moviesAPI
+      .fetchMovieDetails(movieId)
+      .then(movie => {
+        setMovie(movie);
+        setStatus(Status.RESOLVED);
+      })
+      .catch(error => {
+        setError(error);
+        setStatus(Status.REJECTED);
+      });
   }, [movieId]);
   return (
     <>
-      <button>Go back</button>
-      {movie && (
+      {status === Status.PENDING && <p>Download movie</p>}
+      {status === Status.REJECTED && <p>{error}</p>}
+      {status === Status.RESOLVED && (
         <>
+          <button>Go back</button>
           <h1>{movie.title}</h1>
           {movie.poster_path && (
             <img

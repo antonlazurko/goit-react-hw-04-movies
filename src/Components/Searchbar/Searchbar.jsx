@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import styles from './Searchbar.module.css';
 export default function Searchbar({ onSearchbarSubmit }) {
   const [searchQuery, setSearchQuery] = useState('');
-  // const [currentPage, setCurrentPage] = useState(1);
   const onQueryChange = e => {
     setSearchQuery(e.currentTarget.value);
   };
@@ -32,7 +31,7 @@ export default function Searchbar({ onSearchbarSubmit }) {
           type="text"
           autoComplete="off"
           autoFocus
-          placeholder="Search images and photos"
+          placeholder="Search movies"
           onChange={onQueryChange}
         />
       </form>

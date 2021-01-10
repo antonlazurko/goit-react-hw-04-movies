@@ -3,15 +3,37 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { Route, useParams } from 'react-router-dom';
 
 import * as moviesAPI from '../services/movie-api';
+const Status = {
+  IDLE: 'idle',
+  PENDING: 'pending',
+  RESOLVED: 'resolved',
+  REJECTED: 'rejected',
+};
 export default function Cast({ movieId }) {
   const [cast, setCast] = useState([]);
+  const [status, setStatus] = useState(Status.IDLE);
+  const [error, setError] = useState('');
   useEffect(() => {
-    moviesAPI.fetchMovieCast(movieId).then(({ cast }) => setCast(cast));
+    setStatus(Status.PENDING);
+    moviesAPI
+      .fetchMovieCast(movieId)
+      .then(({ cast }) => {
+        setCast(cast);
+        setStatus(Status.RESOLVED);
+      })
+      .catch(error => {
+        setError(error);
+        setStatus(Status.REJECTED);
+      });
   }, [movieId]);
   return (
     <>
-      {cast && (
+      {' '}
+      {status === Status.PENDING && <p>Download cast</p>}
+      {status === Status.REJECTED && <p>{error}</p>}
+      {status === Status.RESOLVED && (
         <ul>
+          {cast === [] && <p>No cast information</p>}
           {cast.map(artist => (
             <li key={artist.id}>
               {artist.name}
