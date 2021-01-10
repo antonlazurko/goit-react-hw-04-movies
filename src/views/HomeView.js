@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 import * as moviesAPI from '../services/movie-api';
 import Status from '../services/Status';
 import s from '../views/HomeView.module.css';
@@ -8,6 +10,7 @@ export default function HomeView() {
   const [movies, setMovies] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     setStatus(Status.PENDING);
@@ -39,7 +42,13 @@ export default function HomeView() {
             {movies &&
               movies.map(movie => (
                 <li key={movie.id} className={s.item}>
-                  <Link to={`movies/${movie.id}`} className={s.name}>
+                  <Link
+                    to={{
+                      pathname: `/movies/${movie.id}`,
+                      state: { from: location },
+                    }}
+                    className={s.name}
+                  >
                     {movie.name ?? movie.title}
                   </Link>
                 </li>

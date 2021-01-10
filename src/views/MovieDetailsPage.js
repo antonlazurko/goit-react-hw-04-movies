@@ -54,6 +54,8 @@ export default function MovieDetailsPage() {
             Go back
           </button>
           <h1>{movie.title}</h1>
+
+          <span>Release date: {movie.release_date}</span>
           {movie.poster_path && (
             <img
               className={s.image}
