@@ -17,9 +17,13 @@ export function fetchMoviesByQuery(movieQuery) {
 export function fetchMovieDetails(movieId) {
   return fetchMovies(`${BASE_URL}/movie/${movieId}?api_key=${AUTH_KEY}`);
 }
-export function fetchMovieCast(id) {
-  return fetchMovies(`${BASE_URL}/movie/${id}/credits?api_key=${AUTH_KEY}`);
+export function fetchMovieCast(movieId) {
+  return fetchMovies(
+    `${BASE_URL}/movie/${movieId}/credits?api_key=${AUTH_KEY}`,
+  );
 }
-export function fetchMovieReviews() {
-  return fetchMovies(`${BASE_URL}/get-movie-reviews`);
+export function fetchMovieReviews(movieId) {
+  return fetchMovies(
+    `${BASE_URL}/movie/${movieId}/reviews?api_key=${AUTH_KEY}`,
+  );
 }
