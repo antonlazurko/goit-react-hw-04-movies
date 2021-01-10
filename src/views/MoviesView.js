@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+
 import * as moviesAPI from '../services/movie-api';
 import Searchbar from '../Components/Searchbar';
 import Status from '../services/Status';
@@ -33,6 +35,8 @@ export default function MoviesView() {
   return (
     <>
       <Searchbar onSearchbarSubmit={onSearchbarSubmit} />
+      <ToastContainer autoClose={3000} position="top-center" />
+
       {status === Status.PENDING && <p>Download movie collection</p>}
       {status === Status.REJECTED && <p>{error}</p>}
 
