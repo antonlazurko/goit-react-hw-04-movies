@@ -15,30 +15,36 @@ export default function MoviesView() {
   const [movieQuery, setMovieQuery] = useState(
     new URLSearchParams(location.search).get('query') ?? '',
   );
+  const [queryPage, setQueryPage] = useState(1);
   const [movies, setMovies] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
-
   const onSearchbarSubmit = data => {
     history.push({ ...location, search: `query=${data}` });
     setMovieQuery(data);
   };
+  useEffect(() => {
+    setQueryPage(1);
+    setMovies([]);
+  }, [movieQuery]);
+  const onLoadMoreBtn = () => setQueryPage(prevState => prevState + 1);
+
   useEffect(() => {
     if (movieQuery === '') {
       return;
     }
     setStatus(Status.PENDING);
     moviesAPI
-      .fetchMoviesByQuery(movieQuery)
+      .fetchMoviesByQuery(movieQuery, queryPage)
       .then(({ results }) => {
-        setMovies(results);
+        setMovies(prevState => [...prevState, ...results]);
         setStatus(Status.RESOLVED);
       })
       .catch(error => {
         setError(error);
         setStatus(Status.REJECTED);
       });
-  }, [movieQuery]);
+  }, [movieQuery, queryPage]);
   return (
     <>
       <Searchbar onSearchbarSubmit={onSearchbarSubmit} />
@@ -48,21 +54,24 @@ export default function MoviesView() {
       {status === Status.REJECTED && <p>{error}</p>}
 
       {status === Status.RESOLVED && (
-        <ul className={s.list}>
-          {movies.map(movie => (
-            <li key={movie.id} className={s.item}>
-              <Link
-                className={s.title}
-                to={{
-                  pathname: `/movies/${movie.id}`,
-                  state: { from: location },
-                }}
-              >
-                {movie.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className={s.list}>
+            {movies.map(movie => (
+              <li key={movie.id} className={s.item}>
+                <Link
+                  className={s.title}
+                  to={{
+                    pathname: `/movies/${movie.id}`,
+                    state: { from: location },
+                  }}
+                >
+                  {movie.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <button onClick={onLoadMoreBtn}>Load more</button>
+        </>
       )}
     </>
   );

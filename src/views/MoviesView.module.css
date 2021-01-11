@@ -1,4 +1,5 @@
-.list{list-style: none;}
+.list{
+    list-style-type: decimal;}
 .item{
     margin-bottom: 10px;
     }

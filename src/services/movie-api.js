@@ -9,9 +9,9 @@ async function fetchMovies(url = '') {
 export function fetchPopularMovies() {
   return fetchMovies(`${BASE_URL}/trending/all/day?api_key=${AUTH_KEY}`);
 }
-export function fetchMoviesByQuery(movieQuery) {
+export function fetchMoviesByQuery(movieQuery, queryPage) {
   return fetchMovies(
-    `${BASE_URL}/search/movie?api_key=${AUTH_KEY}&query=${movieQuery}`,
+    `${BASE_URL}/search/movie?api_key=${AUTH_KEY}&query=${movieQuery}&page=${queryPage}`,
   );
 }
 export function fetchMovieDetails(movieId) {
