@@ -42,6 +42,10 @@ export default function MoviesView() {
       .then(({ results }) => {
         setMovies(prevState => [...prevState, ...results]);
         setStatus(Status.RESOLVED);
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        });
       })
       .catch(error => {
         setError(error);
