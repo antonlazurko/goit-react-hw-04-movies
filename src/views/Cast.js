@@ -29,7 +29,7 @@ export default function Cast({ movieId }) {
       {status === Status.REJECTED && <p>{error}</p>}
       {status === Status.RESOLVED && (
         <ul className={s.list}>
-          {cast === [] && <p>No cast information</p>}
+          {cast.length === 0 && <p>No cast information</p>}
           {cast.map(artist => (
             <li key={artist.id} className={s.item}>
               <span className={s.name}>{artist.name}</span>

@@ -24,11 +24,9 @@ export default function MovieDetailsPage() {
   const history = useHistory();
   const location = useLocation();
   const handleGoBack = () => {
-    if (location.state && location.state.from) {
-      history.push(location.state.from);
-      return;
-    }
-    history.push((location.state = '/movies'));
+    location?.state?.from
+      ? history.push(location.state.from)
+      : history.push((location.state = '/movies'));
   };
 
   useEffect(() => {
@@ -63,10 +61,22 @@ export default function MovieDetailsPage() {
               alt={movie.title}
             />
           )}
-          <NavLink to={`${url}/Cast`} className={s.Cast}>
+          <NavLink
+            to={{
+              pathname: `${url}/Cast`,
+              state: { from: location },
+            }}
+            className={s.Cast}
+          >
             Cast of "{movie.title}" movie
           </NavLink>
-          <NavLink to={`${url}/Reviews`} className={s.Reviews}>
+          <NavLink
+            to={{
+              pathname: `${url}/Reviews`,
+              state: { from: location },
+            }}
+            className={s.Reviews}
+          >
             Reviews of "{movie.title}" movie
           </NavLink>
           <hr />
