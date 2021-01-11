@@ -19,14 +19,17 @@ export default function MoviesView() {
   const [movies, setMovies] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
+
   const onSearchbarSubmit = data => {
     history.push({ ...location, search: `query=${data}` });
     setMovieQuery(data);
   };
+
   useEffect(() => {
     setQueryPage(1);
     setMovies([]);
   }, [movieQuery]);
+
   const onLoadMoreBtn = () => setQueryPage(prevState => prevState + 1);
 
   useEffect(() => {
@@ -45,6 +48,7 @@ export default function MoviesView() {
         setStatus(Status.REJECTED);
       });
   }, [movieQuery, queryPage]);
+
   return (
     <>
       <Searchbar onSearchbarSubmit={onSearchbarSubmit} />
