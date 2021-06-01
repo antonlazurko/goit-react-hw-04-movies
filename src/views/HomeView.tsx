@@ -6,8 +6,10 @@ import * as moviesAPI from '../services/movie-api';
 import Status from '../services/Status';
 import s from '../views/HomeView.module.css';
 
+type TMovies = { id: string, name: string, title: string }
+
 export default function HomeView() {
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useState<TMovies[]>([]);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
   const location = useLocation();
@@ -49,6 +51,7 @@ export default function HomeView() {
                     }}
                     className={s.name}
                   >
+
                     {movie.name ?? movie.title}
                   </Link>
                 </li>

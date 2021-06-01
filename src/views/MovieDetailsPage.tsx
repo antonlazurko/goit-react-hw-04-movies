@@ -5,28 +5,38 @@ import { NavLink, useRouteMatch } from 'react-router-dom';
 import * as moviesAPI from '../services/movie-api';
 import Status from '../services/Status';
 import s from '../views/MovieDetailsPage.module.css';
+type TParams = { movieId: string }
+type LocationState = {
+  state: string
+
+  from: string
+
+};
+const initialState = { id: 'string', name: 'string', title: 'string', poster_path: 'string', release_date: 'string' }
+
+type TMovie = { id: string, name: string, title: string,poster_path:string,release_date:string }
 
 const NotFoundView = lazy(() =>
-  import('../views/NotFoundView.js' /*webpackChunkName: "NotFoundView" */),
+  import('../views/NotFoundView' /*webpackChunkName: "NotFoundView" */),
 );
-const Cast = lazy(() => import('./Cast.js' /*webpackChunkName: "Cast" */));
+const Cast = lazy(() => import('./Cast' /*webpackChunkName: "Cast" */));
 const Reviews = lazy(() =>
-  import('./Reviews.js' /*webpackChunkName: "Reviews" */),
+  import('./Reviews' /*webpackChunkName: "Reviews" */),
 );
 
 export default function MovieDetailsPage() {
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState<TMovie>(initialState);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
 
-  const { movieId } = useParams();
+  const { movieId } = useParams<TParams>();
   const { url, path } = useRouteMatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<LocationState>();
   const handleGoBack = () => {
     location?.state?.from
       ? history.push(location.state.from)
-      : history.push((location.state = '/movies'));
+      : history.push((location.state.from = '/movies'));
   };
 
   useEffect(() => {

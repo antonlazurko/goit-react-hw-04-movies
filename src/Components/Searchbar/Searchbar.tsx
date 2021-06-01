@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './Searchbar.module.css';
-export default function Searchbar({ onSearchbarSubmit }) {
+type TProps = {
+  onSearchbarSubmit:(searchQuery:string)=>void
+}
+export default function Searchbar({ onSearchbarSubmit }:TProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const onQueryChange = e => {
-    setSearchQuery(e.currentTarget.value);
-  };
-  const onSubmit = e => {
-    e.preventDefault();
+  const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
     if (searchQuery.trim() === '') {
       toast('Type something to find.');
       return;
@@ -32,7 +32,7 @@ export default function Searchbar({ onSearchbarSubmit }) {
           autoComplete="off"
           autoFocus
           placeholder="Search movies"
-          onChange={onQueryChange}
+          onChange={(e)=>setSearchQuery(e.currentTarget.value)}
         />
       </form>
     </header>

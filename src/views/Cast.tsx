@@ -3,18 +3,24 @@ import PropTypes from 'prop-types';
 
 import * as moviesAPI from '../services/movie-api';
 import Status from '../services/Status';
-import s from '../views/Reviews.module.css';
-export default function Reviews({ movieId }) {
-  const [reviews, setReviews] = useState([]);
+import s from '../views/Cast.module.css';
+type TMovieId = { movieId: string }
+interface IArtist{
+  id: string;
+  profile_path: string;
+  name:string
+}
+export default function Cast({ movieId }:TMovieId) {
+  const [cast, setCast] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState('');
+
   useEffect(() => {
     setStatus(Status.PENDING);
-
     moviesAPI
-      .fetchMovieReviews(movieId)
-      .then(({ results }) => {
-        setReviews(results);
+      .fetchMovieCast(movieId)
+      .then(({ cast }) => {
+        setCast(cast);
         setStatus(Status.RESOLVED);
       })
       .catch(error => {
@@ -24,24 +30,21 @@ export default function Reviews({ movieId }) {
   }, [movieId]);
   return (
     <>
-      {status === Status.PENDING && <p>Download movie reviews</p>}
+      {status === Status.PENDING && <p>Download cast</p>}
       {status === Status.REJECTED && <p>{error}</p>}
-
       {status === Status.RESOLVED && (
         <ul className={s.list}>
-          {reviews.length === 0 && <p>There is no one review for this movie</p>}
-          {reviews.map(review => (
-            <li key={review.id} className={s.item}>
-              Author:
-              <span className={s.author}>{review.author.toUpperCase()}</span>
-              {review.profile_path && (
+          {cast.length === 0 && <p>No cast information</p>}
+          {cast.map((artist:IArtist) => (
+            <li key={artist.id} className={s.item}>
+              <span className={s.name}>{artist.name}</span>
+              {artist.profile_path && (
                 <img
                   className={s.image}
-                  src={`https://image.tmdb.org/t/p/w200${review.avatar_path}`}
-                  alt={review.name}
+                  src={`https://image.tmdb.org/t/p/w200/${artist.profile_path}`}
+                  alt={artist.name}
                 />
               )}
-              <p className={s.content}>{review.content}</p>
             </li>
           ))}
         </ul>
@@ -49,6 +52,6 @@ export default function Reviews({ movieId }) {
     </>
   );
 }
-Reviews.propTypes = {
+Cast.propTypes = {
   movieId: PropTypes.string,
 };
