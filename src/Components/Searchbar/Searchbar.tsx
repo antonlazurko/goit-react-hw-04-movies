@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import styles from './Searchbar.module.css';
+import styles from "./Searchbar.module.css";
+
 type TProps = {
-  onSearchbarSubmit:(searchQuery:string)=>void
-}
-export default function Searchbar({ onSearchbarSubmit }:TProps) {
-  const [searchQuery, setSearchQuery] = useState('');
+  onSearchbarSubmit: (searchQuery: string) => void;
+};
+export default function Searchbar({ onSearchbarSubmit }: TProps) {
+  const [searchQuery, setSearchQuery] = useState("");
   const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (searchQuery.trim() === '') {
-      toast('Type something to find.');
+    if (searchQuery.trim() === "") {
+      toast("Type something to find.");
       return;
     }
     onSearchbarSubmit(searchQuery.toLowerCase());
-    setSearchQuery('');
+    setSearchQuery("");
   };
   return (
     <header className={styles.Searchbar}>
@@ -32,7 +33,7 @@ export default function Searchbar({ onSearchbarSubmit }:TProps) {
           autoComplete="off"
           autoFocus
           placeholder="Search movies"
-          onChange={(e)=>setSearchQuery(e.currentTarget.value)}
+          onChange={(e) => setSearchQuery(e.currentTarget.value)}
         />
       </form>
     </header>

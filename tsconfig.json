@@ -6,7 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "allowJs": true,
+    "experimentalDecorators":true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

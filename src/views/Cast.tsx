@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
-import * as moviesAPI from '../services/movie-api';
-import Status from '../services/Status';
-import s from '../views/Cast.module.css';
-type TMovieId = { movieId: string }
-interface IArtist{
+import * as moviesAPI from "../services/movie-api";
+import Status from "../services/Status";
+import s from "../views/Cast.module.css";
+type TMovieId = { movieId: string };
+interface IArtist {
   id: string;
   profile_path: string;
-  name:string
+  name: string;
 }
-export default function Cast({ movieId }:TMovieId) {
+export default function Cast({ movieId }: TMovieId) {
   const [cast, setCast] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     setStatus(Status.PENDING);
@@ -23,7 +23,7 @@ export default function Cast({ movieId }:TMovieId) {
         setCast(cast);
         setStatus(Status.RESOLVED);
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error);
         setStatus(Status.REJECTED);
       });
@@ -35,7 +35,7 @@ export default function Cast({ movieId }:TMovieId) {
       {status === Status.RESOLVED && (
         <ul className={s.list}>
           {cast.length === 0 && <p>No cast information</p>}
-          {cast.map((artist:IArtist) => (
+          {cast.map((artist: IArtist) => (
             <li key={artist.id} className={s.item}>
               <span className={s.name}>{artist.name}</span>
               {artist.profile_path && (
