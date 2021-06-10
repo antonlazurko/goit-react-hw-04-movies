@@ -3,8 +3,6 @@ import React, { createContext, lazy, Suspense, useReducer } from "react";
 import Container from "./Components/Container/Container";
 import AppBar from "./Components/AppBar/";
 import { ButtonWithToggle } from "./Components/ToggleBtn";
-import { spawn } from "child_process";
-import { ListFormat } from "typescript";
 
 // import HomeView from '../src/views/HomeView';
 // import MoviesView from '../src/views/MoviesView';
@@ -21,8 +19,6 @@ const MovieDetailsPage = lazy(
     import("./views/MovieDetailsPage" /*webpackChunkName: "MovieDetailsPage" */)
 );
 
-boundShowDogName();
-// @logClass
 class User {
   constructor(public name: string, public age: number) {}
   public getPAss(): string {
