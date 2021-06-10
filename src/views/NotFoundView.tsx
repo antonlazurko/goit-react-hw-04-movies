@@ -1,6 +1,6 @@
 type TProps = {
-  error: string
+  error: string;
 };
-export default function NotFoundView({ error}:TProps) {
+export default function NotFoundView({ error }: TProps) {
   return <h1>Page not found</h1>;
 }
