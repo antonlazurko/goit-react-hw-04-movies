@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-type TBaseProps = {
-  primeTitle: string;
-  secTitle: string;
-};
+
 type TInjectedProps = {
   toggleStatus: Boolean;
   toggle: () => void;
