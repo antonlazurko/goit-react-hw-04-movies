@@ -4,6 +4,7 @@ import Container from "./Components/Container/Container";
 import AppBar from "./Components/AppBar/";
 import { ButtonWithToggle } from "./Components/ToggleBtn";
 import AdminForm from "./Components/AdminForm/AdminForm";
+import { TAdminCredentials } from "./types";
 import firebase from "firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 const firebaseConfig = {
@@ -38,28 +39,30 @@ export const App: React.FC = () => {
       snapshotListenOptions: { includeMetadataChanges: true },
     }
   );
+  const handleSubmit = (credentials: TAdminCredentials) => {
+    firestore.collection("answers").add({
+      ...credentials,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  };
+
   return (
     <Container>
-      {!loading && (
-        <AdminForm
-          onSubmit={(data) => {
-            firestore.collection("answers").add({
-              ...data,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            });
-          }}
-        />
-      )}
+      {!loading && <AdminForm onSubmit={handleSubmit} />}
       {!loading && (
         <div>
-          {answers?.map((item) => (
-            <div key={item.createdAt}>
-              {/* {item.createdAt} */}
-              Question: {item.question}
-              <hr />
-              Answer: {item.answer}
-            </div>
-          ))}
+          {answers ? (
+            answers.map((item) => (
+              <div key={item.createdAt}>
+                <hr />
+                Question: {item.question}
+                <br />
+                Answer: {item.answer}
+              </div>
+            ))
+          ) : (
+            <div>{error}</div>
+          )}
         </div>
       )}
       <AppBar />
