@@ -1,17 +1,16 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-import * as moviesAPI from '../services/movie-api';
-import Status from '../services/Status';
-import s from '../views/HomeView.module.css';
-
-type TMovies = { id: string, name: string, title: string }
+import * as moviesAPI from "../services/movie-api";
+import Status from "../services/Status";
+import s from "../views/HomeView.module.css";
+import { TMovies } from "../types";
 
 export default function HomeView() {
   const [movies, setMovies] = useState<TMovies[]>([]);
   const [status, setStatus] = useState(Status.IDLE);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const location = useLocation();
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export default function HomeView() {
           setStatus(Status.RESOLVED);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error);
         setStatus(Status.REJECTED);
       });
@@ -42,7 +41,7 @@ export default function HomeView() {
           <h1 className={s.title}>Trending this week</h1>
           <ul className={s.list}>
             {movies &&
-              movies.map(movie => (
+              movies.map((movie) => (
                 <li key={movie.id} className={s.item}>
                   <Link
                     to={{
@@ -51,7 +50,6 @@ export default function HomeView() {
                     }}
                     className={s.name}
                   >
-
                     {movie.name ?? movie.title}
                   </Link>
                 </li>

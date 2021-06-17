@@ -1,33 +1,33 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
-import { Route, useParams, useLocation, useHistory } from 'react-router-dom';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { useState, useEffect, lazy, Suspense, useContext } from "react";
+import { Route, useParams, useLocation, useHistory } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
+import * as moviesAPI from "../services/movie-api";
+import { FirebaseContext } from "../index";
+import Status from "../services/Status";
+import s from "../views/MovieDetailsPage.module.css";
+import { TParams, LocationState } from "../types";
 
-import * as moviesAPI from '../services/movie-api';
-import Status from '../services/Status';
-import s from '../views/MovieDetailsPage.module.css';
-type TParams = { movieId: string }
-type LocationState = {
-  state: string
-
-  from: string
-
+const initialState = {
+  id: "string",
+  name: "string",
+  title: "string",
+  poster_path: "string",
+  release_date: "string",
 };
-const initialState = { id: 'string', name: 'string', title: 'string', poster_path: 'string', release_date: 'string' }
 
-type TMovie = { id: string, name: string, title: string,poster_path:string,release_date:string }
-
-const NotFoundView = lazy(() =>
-  import('../views/NotFoundView' /*webpackChunkName: "NotFoundView" */),
+const NotFoundView = lazy(
+  () => import("../views/NotFoundView" /*webpackChunkName: "NotFoundView" */)
 );
-const Cast = lazy(() => import('./Cast' /*webpackChunkName: "Cast" */));
-const Reviews = lazy(() =>
-  import('./Reviews' /*webpackChunkName: "Reviews" */),
+const Cast = lazy(() => import("./Cast" /*webpackChunkName: "Cast" */));
+const Reviews = lazy(
+  () => import("./Reviews" /*webpackChunkName: "Reviews" */)
 );
 
 export default function MovieDetailsPage() {
-  const [movie, setMovie] = useState<TMovie>(initialState);
+  const { firestore } = useContext(FirebaseContext);
+  const [movie, setMovie] = useState<typeof initialState>(initialState);
   const [status, setStatus] = useState(Status.IDLE);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { movieId } = useParams<TParams>();
   const { url, path } = useRouteMatch();
@@ -36,18 +36,30 @@ export default function MovieDetailsPage() {
   const handleGoBack = () => {
     location?.state?.from
       ? history.push(location.state.from)
-      : history.push((location.state.from = '/movies'));
+      : history.push((location.state.from = "/movies"));
+  };
+  const handleAddToFavorite = () => {
+    firestore
+      ?.collection("movies")
+      .doc(`movieId${movieId}`)
+      .set({ movieId })
+      .then(() => {
+        console.log("Document successfully written!");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
   };
 
   useEffect(() => {
     setStatus(Status.PENDING);
     moviesAPI
       .fetchMovieDetails(movieId)
-      .then(movie => {
+      .then((movie) => {
         setMovie(movie);
         setStatus(Status.RESOLVED);
       })
-      .catch(Error => {
+      .catch((Error) => {
         setError(Error);
         setStatus(Status.REJECTED);
       });
@@ -71,6 +83,9 @@ export default function MovieDetailsPage() {
               alt={movie.title}
             />
           )}
+          <button onClick={handleAddToFavorite} className={s.addMovieBtn}>
+            Add to favorites
+          </button>
           <NavLink
             to={{
               pathname: `${url}/Cast`,

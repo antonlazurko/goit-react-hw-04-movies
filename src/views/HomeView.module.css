@@ -9,3 +9,7 @@
 .name{
     font-size: 18px;
 font-weight: bold; text-decoration: none;}
+.deleteBtn{
+    margin-left: 15px;
+    border-radius: 50%;
+}
