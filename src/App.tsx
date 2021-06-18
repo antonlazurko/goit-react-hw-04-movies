@@ -1,8 +1,9 @@
 import { Switch, Route, Redirect } from "react-router-dom";
 import React, { lazy, Suspense, useContext } from "react";
-import Container from "./Components/Container/Container";
 import AppBar from "./Components/AppBar/";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Container } from "@material-ui/core";
+
 import { FirebaseContext } from "./index";
 import Loader from "./Components/Loader";
 const HomeView = lazy(
@@ -26,7 +27,7 @@ export const App: React.FC = () => {
     return <Loader />;
   }
   return (
-    <Container>
+    <Container fixed>
       <AppBar />
       <Suspense fallback={<div>Downloading...</div>}>
         <Switch>
