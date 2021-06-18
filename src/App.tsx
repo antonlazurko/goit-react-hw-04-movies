@@ -4,6 +4,7 @@ import Container from "./Components/Container/Container";
 import AppBar from "./Components/AppBar/";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FirebaseContext } from "./index";
+import Loader from "./Components/Loader";
 const HomeView = lazy(
   () => import("./views/HomeView" /*webpackChunkName: "HomeView" */)
 );
@@ -20,8 +21,10 @@ const FavoriteMovieView = lazy(
 const LoginView = lazy(() => import("./views/LoginView/LoginView"));
 export const App: React.FC = () => {
   const { auth } = useContext(FirebaseContext);
-  const [user] = useAuthState(auth);
-
+  const [user, loading] = useAuthState(auth);
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Container>
       <AppBar />

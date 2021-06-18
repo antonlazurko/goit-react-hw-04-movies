@@ -28,13 +28,15 @@ const Navigation = () => {
         >
           Movies
         </NavLink>
-        <NavLink
-          to="/favorite"
-          className={styles.link}
-          activeClassName={styles.activeLink}
-        >
-          Favorite movies
-        </NavLink>
+        {user && (
+          <NavLink
+            to="/favorite"
+            className={styles.link}
+            activeClassName={styles.activeLink}
+          >
+            Favorite movies
+          </NavLink>
+        )}
       </div>
       <div className={styles.auth}>
         {!user ? (
