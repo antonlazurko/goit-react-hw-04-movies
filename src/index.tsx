@@ -17,10 +17,11 @@ const firebaseConfig = {
 export const FirebaseContext = createContext<Partial<FirebaseContextProps>>({});
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
+const auth = firebase.auth();
 
 ReactDOM.render(
   <React.StrictMode>
-    <FirebaseContext.Provider value={{ firestore, firebase }}>
+    <FirebaseContext.Provider value={{ firestore, firebase, auth }}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
