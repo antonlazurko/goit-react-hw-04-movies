@@ -7,7 +7,10 @@ import { App } from "./App";
 import { FirebaseContextProps } from "./types";
 const firebaseConfig = {
   apiKey: "AIzaSyBg-_rup-O3IpgVFh640OTuEqu4LapaGeE",
-  authDomain: "survey-test-antonlazurko.firebaseapp.com",
+  authDomain: [
+    "survey-test-antonlazurko.firebaseapp.com",
+    "https://antonlazurko-movies.netlify.app/",
+  ],
   databaseURL: "https://survey-test-antonlazurko-default-rtdb.firebaseio.com",
   projectId: "survey-test-antonlazurko",
   storageBucket: "survey-test-antonlazurko.appspot.com",

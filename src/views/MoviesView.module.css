@@ -8,4 +8,7 @@
     text-decoration: none;
     font-size: 18px;
     font-weight: bold;
+
 }
+.title:hover, .title:focus{
+color: black;  }

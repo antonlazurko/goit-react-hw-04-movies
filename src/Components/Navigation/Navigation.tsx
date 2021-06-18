@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(1),
+    marginLeft: "10px",
   },
 }));
 const Navigation = () => {
@@ -33,6 +34,7 @@ const Navigation = () => {
   const handlerExitBtn = () => {
     auth.signOut();
   };
+
   return (
     <nav className={styles.nav}>
       <AppBar position="static">
@@ -44,7 +46,7 @@ const Navigation = () => {
               className={styles.link}
               activeClassName={styles.activeLink}
             >
-              Home
+              Trendings
             </NavLink>
 
             <NavLink
@@ -52,7 +54,7 @@ const Navigation = () => {
               className={styles.link}
               activeClassName={styles.activeLink}
             >
-              Movies
+              Search movies
             </NavLink>
 
             {user && (
@@ -75,16 +77,19 @@ const Navigation = () => {
                 Login
               </NavLink>
             ) : (
-              <Button
-                onClick={handlerExitBtn}
-                variant="contained"
-                color="secondary"
-                size="small"
-                className={classes.button}
-                startIcon={<ExitToAppIcon />}
-              >
-                Exit
-              </Button>
+              <>
+                <span>{user?.displayName}</span>
+                <Button
+                  onClick={handlerExitBtn}
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  className={classes.button}
+                  startIcon={<ExitToAppIcon />}
+                >
+                  Exit
+                </Button>
+              </>
             )}
           </Typography>
         </Toolbar>

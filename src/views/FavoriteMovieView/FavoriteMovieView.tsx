@@ -1,6 +1,16 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useLocation, Link } from "react-router-dom";
+
+import DeleteIcon from "@material-ui/icons/Delete";
+
+import {
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+} from "@material-ui/core";
+
 import { FirebaseContext } from "../../index";
 
 import { TMovies } from "../../types";
@@ -35,23 +45,28 @@ const FavoriteMovieView: React.FC = () => {
       (movie) => `${movie.id}` === favoriteMovieEl.movieId
     );
     return (
-      <li key={movie?.id} className={s.item}>
-        <Link
-          to={{
-            pathname: `/movies/${movie?.id}`,
-            state: { from: location },
-          }}
-          className={s.name}
-        >
-          {movie?.name ?? movie?.title}
-        </Link>
-        <button
-          className={s.deleteBtn}
-          onClick={() => handleRemoveFavorite(favoriteMovieEl.movieId)}
-        >
-          X
-        </button>
-      </li>
+      <>
+        <ListItem key={favoriteMovieEl.movieId}>
+          <Link
+            to={{
+              pathname: `/movies/${movie?.id}`,
+              state: { from: location },
+            }}
+            className={s.name}
+          >
+            {movie?.name ?? movie?.title}
+          </Link>
+          <ListItemSecondaryAction>
+            <IconButton
+              aria-label="delete"
+              onClick={() => handleRemoveFavorite(favoriteMovieEl.movieId)}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        <hr />
+      </>
     );
   };
 
@@ -71,14 +86,14 @@ const FavoriteMovieView: React.FC = () => {
       <h1 className={s.title}>
         {favoriteMovies?.length ? "Favorites" : "No one movie"}
       </h1>
-      <ul className={s.list}>
-        {loading && <div>loading</div>}
+      <List>
+        {loading && <div>Loading</div>}
         {error && <div>{error}</div>}
         {!loading &&
           favoriteMovies?.map((favoriteMovie) =>
             movieRender(favoriteMovie, movies)
           )}
-      </ul>
+      </List>
     </>
   );
 };

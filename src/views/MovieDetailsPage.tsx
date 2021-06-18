@@ -2,10 +2,13 @@ import { useState, useEffect, lazy, Suspense, useContext } from "react";
 import { Route, useParams, useLocation, useHistory } from "react-router-dom";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import * as moviesAPI from "../services/movie-api";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { FirebaseContext } from "../index";
 import Status from "../services/Status";
 import s from "../views/MovieDetailsPage.module.css";
 import { TParams, LocationState } from "../types";
+import { Button, Container } from "@material-ui/core";
 
 const initialState = {
   id: "string",
@@ -13,6 +16,7 @@ const initialState = {
   title: "string",
   poster_path: "string",
   release_date: "string",
+  overview: "string",
 };
 
 const NotFoundView = lazy(
@@ -28,6 +32,7 @@ export default function MovieDetailsPage() {
   const [movie, setMovie] = useState<typeof initialState>(initialState);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState("");
+  console.log(movie);
 
   const { movieId } = useParams<TParams>();
   const { url, path } = useRouteMatch();
@@ -69,51 +74,65 @@ export default function MovieDetailsPage() {
       {status === Status.PENDING && <p>Download movie</p>}
       {status === Status.REJECTED && <NotFoundView error={error} />}
       {status === Status.RESOLVED && (
-        <>
-          <button onClick={handleGoBack} className={s.goBackBtn}>
-            Go back
-          </button>
-          <h1>{movie.title}</h1>
-
-          <span>Release date: {movie.release_date}</span>
-          {movie.poster_path && (
-            <img
-              className={s.image}
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              alt={movie.title}
-            />
-          )}
-          <button onClick={handleAddToFavorite} className={s.addMovieBtn}>
-            Add to favorites
-          </button>
-          <NavLink
-            to={{
-              pathname: `${url}/Cast`,
-              state: { from: location },
-            }}
-            className={s.Cast}
-          >
-            Cast of "{movie.title}" movie
-          </NavLink>
-          <NavLink
-            to={{
-              pathname: `${url}/Reviews`,
-              state: { from: location },
-            }}
-            className={s.Reviews}
-          >
-            Reviews of "{movie.title}" movie
-          </NavLink>
-          <hr />
-          <Suspense fallback={<div>Downloading...</div>}>
-            <Route path={`${path}/Cast`}>
-              <Cast movieId={movieId} />
-            </Route>
-            <Route path={`${path}/Reviews`}>
-              <Reviews movieId={movieId} />
-            </Route>
-          </Suspense>
-        </>
+        <Container fixed>
+          <div className={s.buttonsArea}>
+            <Button aria-label="delete" onClick={handleGoBack}>
+              <ArrowBackIosIcon fontSize="small" />
+              Back
+            </Button>
+            <Button aria-label="delete" onClick={handleAddToFavorite}>
+              <AddToPhotosIcon fontSize="small" />
+              Add to favorites
+            </Button>
+          </div>
+          <h2>{movie.title}</h2>
+          <div className={s.movieCard}>
+            <div className={s.poster}>
+              {movie.poster_path && (
+                <img
+                  className={s.image}
+                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                  alt={movie.title}
+                />
+              )}
+            </div>
+            <div className={s.descr}>
+              <div className={s.reliese}>
+                Release date: {movie.release_date}
+              </div>
+              <div className={s.text}>{movie.overview}</div>
+            </div>
+          </div>
+          <div>
+            <NavLink
+              to={{
+                pathname: `${url}/Cast`,
+                state: { from: location },
+              }}
+              className={s.Cast}
+            >
+              Cast of "{movie.title}" movie
+            </NavLink>
+            <NavLink
+              to={{
+                pathname: `${url}/Reviews`,
+                state: { from: location },
+              }}
+              className={s.Reviews}
+            >
+              Reviews of "{movie.title}" movie
+            </NavLink>
+            <hr />
+            <Suspense fallback={<div>Downloading...</div>}>
+              <Route path={`${path}/Cast`}>
+                <Cast movieId={movieId} />
+              </Route>
+              <Route path={`${path}/Reviews`}>
+                <Reviews movieId={movieId} />
+              </Route>
+            </Suspense>
+          </div>
+        </Container>
       )}
     </>
   );

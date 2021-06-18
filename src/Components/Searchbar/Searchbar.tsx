@@ -1,15 +1,27 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-
+import { Button } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
+import Input from "@material-ui/core/Input";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import styles from "./Searchbar.module.css";
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      "& > *": {
+        margin: theme.spacing(1),
+      },
+    },
+  })
+);
 
 type TProps = {
   onSearchbarSubmit: (searchQuery: string) => void;
 };
 export default function Searchbar({ onSearchbarSubmit }: TProps) {
+  const classes = useStyles();
+
   const [searchQuery, setSearchQuery] = useState("");
   const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -21,25 +33,32 @@ export default function Searchbar({ onSearchbarSubmit }: TProps) {
     setSearchQuery("");
   };
   return (
-    <header className={styles.Searchbar}>
-      <form onSubmit={onSubmit} className={styles.SearchForm}>
-        <button type="submit" className={styles.SearchFormButton}>
-          <span className={styles.SearchFormButtonLabel}>Search</span>
-        </button>
-        <input
-          className={styles.SearchFormInput}
+    <>
+      <form
+        className={classes.root}
+        onSubmit={onSubmit}
+        noValidate
+        autoComplete="off"
+      >
+        <Input
+          placeholder="Search movies"
+          inputProps={{ "aria-label": "description" }}
           value={searchQuery}
           type="text"
           autoComplete="off"
           autoFocus
-          placeholder="Search movies"
           onChange={(e) => setSearchQuery(e.currentTarget.value)}
         />
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          type="submit"
+          startIcon={<SearchIcon />}
+        >
+          Search
+        </Button>
       </form>
-    </header>
+    </>
   );
 }
-
-Searchbar.propTypes = {
-  onFormSubmit: PropTypes.func,
-};

@@ -1,10 +1,23 @@
-.goBackBtn{
-    width: 70px;
-    height: 30px;
-    background-color: rgb(150, 150, 253)    ;
-    border-radius: 10%;
-    outline: none;
-    border: solid 1px black;
+.movieCard{
+    display: flex;
+    align-items: center;
+}
+.reliese{
+margin-bottom: 30px;
+font-size: large;
+font-weight: bold;}
+
+.poster{
+    margin-right: 50px;
+}
+.descr{
+    display: flex;
+    flex-direction: column;
+}
+.descr .text{
+    color: brown;
+    font-size: 24px;
+    font-style: italic;
 }
 .image{
     width: 300px;
@@ -23,11 +36,9 @@
     font-size: 20px;
     font-weight: bold;
 }
-.addMovieBtn{
-width: 70px;
-height: 70px;
-background-color: rgb(150, 150, 253);
-border-radius: 50%;
-outline: none;
-border: solid 1px black;
+
+.buttonsArea{
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
 }

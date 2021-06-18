@@ -8,7 +8,13 @@
 }
 .name{
     font-size: 18px;
-font-weight: bold; text-decoration: none;}
+    font-weight: bold; text-decoration: none;}
+
+.name:hover,
+.name:focus {
+    color: black;
+}
+
 .deleteBtn{
     margin-left: 15px;
     border-radius: 50%;
