@@ -78,11 +78,12 @@ const Navigation = () => {
               <Button
                 onClick={handlerExitBtn}
                 variant="contained"
-                color="primary"
+                color="secondary"
+                size="small"
                 className={classes.button}
                 startIcon={<ExitToAppIcon />}
               >
-                SignOut
+                Exit
               </Button>
             )}
           </Typography>
