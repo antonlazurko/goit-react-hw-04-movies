@@ -1,20 +1,15 @@
 import { useContext } from "react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import { useLocation } from "react-router-dom";
 import firebase from "firebase";
+import { LoginPage } from "@antonlazurko/auth_form_package";
 
 import { FirebaseContext } from "../../index";
 
-import { TMovies } from "../../types";
-import s from "../HomeView.module.css";
-
 const LoginView: React.FC = () => {
   const { auth } = useContext(FirebaseContext);
-  const location = useLocation();
   const handleAuthorize = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    const { user } = await auth.signInWithPopup(provider);
+    await auth.signInWithPopup(provider);
   };
-  return <button onClick={handleAuthorize}></button>;
+  return <LoginPage onSubmit={handleAuthorize} />;
 };
 export default LoginView;

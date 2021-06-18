@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import React, { lazy, Suspense, useContext } from "react";
 import Container from "./Components/Container/Container";
 import AppBar from "./Components/AppBar/";
@@ -21,7 +21,6 @@ const LoginView = lazy(() => import("./views/LoginView/LoginView"));
 export const App: React.FC = () => {
   const { auth } = useContext(FirebaseContext);
   const [user] = useAuthState(auth);
-  console.log(user);
 
   return (
     <Container>
@@ -38,10 +37,10 @@ export const App: React.FC = () => {
             <MovieDetailsPage />
           </Route>
           <Route exact path="/favorite">
-            <FavoriteMovieView />
+            {user ? <FavoriteMovieView /> : <Redirect to={"/login"} />}
           </Route>
-          <Route>
-            <LoginView />
+          <Route path="/login">
+            {!user ? <LoginView /> : <Redirect to={"/"} />}
           </Route>
         </Switch>
       </Suspense>
