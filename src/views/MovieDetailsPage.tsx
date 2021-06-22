@@ -5,6 +5,8 @@ import * as moviesAPI from "../services/movie-api";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import { FirebaseContext } from "../index";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 import Status from "../services/Status";
 import s from "../views/MovieDetailsPage.module.css";
 import { TParams, LocationState } from "../types";
@@ -28,11 +30,11 @@ const Reviews = lazy(
 );
 
 export default function MovieDetailsPage() {
-  const { firestore } = useContext(FirebaseContext);
+  const { firestore, auth } = useContext(FirebaseContext);
   const [movie, setMovie] = useState<typeof initialState>(initialState);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState("");
-  console.log(movie);
+  const [user] = useAuthState(auth);
 
   const { movieId } = useParams<TParams>();
   const { url, path } = useRouteMatch();
@@ -45,7 +47,7 @@ export default function MovieDetailsPage() {
   };
   const handleAddToFavorite = () => {
     firestore
-      ?.collection("movies")
+      ?.collection(`${user?.displayName}`)
       .doc(`movieId${movieId}`)
       .set({ movieId })
       .then(() => {

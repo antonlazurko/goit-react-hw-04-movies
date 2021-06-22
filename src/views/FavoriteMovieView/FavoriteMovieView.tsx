@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useLocation, Link } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -16,21 +17,23 @@ import { FirebaseContext } from "../../index";
 import { TMovies } from "../../types";
 import * as moviesAPI from "../../services/movie-api";
 import s from "../HomeView.module.css";
+import styles from "./FavoriteMovieView.module.css";
 
 const FavoriteMovieView: React.FC = () => {
-  const { firestore } = useContext(FirebaseContext);
+  const { firestore, auth } = useContext(FirebaseContext);
   const [movies, setMovies] = useState<TMovies[]>([]);
   const location = useLocation();
+  const [user] = useAuthState(auth);
 
   const [favoriteMovies, loading, error] = useCollectionData(
-    firestore?.collection("movies"),
+    firestore?.collection(`${user?.displayName}`),
     {
       snapshotListenOptions: { includeMetadataChanges: true },
     }
   );
   const handleRemoveFavorite = (id: string) => {
     firestore
-      ?.collection("movies")
+      ?.collection(`${user?.displayName}`)
       .doc(`movieId${id}`)
       .delete()
       .then(() => {
@@ -83,17 +86,19 @@ const FavoriteMovieView: React.FC = () => {
 
   return (
     <>
-      <h1 className={s.title}>
-        {favoriteMovies?.length ? "Favorites" : "No one movie"}
-      </h1>
-      <List>
-        {loading && <div>Loading</div>}
-        {error && <div>{error}</div>}
-        {!loading &&
-          favoriteMovies?.map((favoriteMovie) =>
-            movieRender(favoriteMovie, movies)
-          )}
-      </List>
+      <h1 className={s.title}>Favorites</h1>
+      {favoriteMovies?.length ? (
+        <List>
+          {loading && <div>Loading</div>}
+          {error && <div>{error}</div>}
+          {!loading &&
+            favoriteMovies?.map((favoriteMovie) =>
+              movieRender(favoriteMovie, movies)
+            )}
+        </List>
+      ) : (
+        <h2 className={`${styles.title}`}>No one movie</h2>
+      )}
     </>
   );
 };

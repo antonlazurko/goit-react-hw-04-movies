@@ -6,16 +6,12 @@ import firebase from "firebase";
 import { App } from "./App";
 import { FirebaseContextProps } from "./types";
 const firebaseConfig = {
-  apiKey: "AIzaSyBg-_rup-O3IpgVFh640OTuEqu4LapaGeE",
-  authDomain: [
-    "survey-test-antonlazurko.firebaseapp.com",
-    "https://antonlazurko-movies.netlify.app/",
-  ],
-  databaseURL: "https://survey-test-antonlazurko-default-rtdb.firebaseio.com",
-  projectId: "survey-test-antonlazurko",
-  storageBucket: "survey-test-antonlazurko.appspot.com",
-  messagingSenderId: "66259605692",
-  appId: "1:66259605692:web:95b0e7181079911b5a58b9",
+  apiKey: "AIzaSyBlDX-Hsh-9msaWKqI4JMYpdvVj6MG9w8Y",
+  authDomain: "movies-antonlazurko.firebaseapp.com",
+  projectId: "movies-antonlazurko",
+  storageBucket: "movies-antonlazurko.appspot.com",
+  messagingSenderId: "213386909953",
+  appId: "1:213386909953:web:67c5258469e3fd2c08e300",
 };
 export const FirebaseContext = createContext<Partial<FirebaseContextProps>>({});
 firebase.initializeApp(firebaseConfig);

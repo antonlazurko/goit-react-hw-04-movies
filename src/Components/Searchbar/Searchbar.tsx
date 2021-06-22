@@ -9,9 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      "& > *": {
-        margin: theme.spacing(1),
-      },
+      marginTop: "40px",
+    },
+    searchBar: {
+      display: "flex",
+      justifyContent: "center",
     },
   })
 );
@@ -33,7 +35,7 @@ export default function Searchbar({ onSearchbarSubmit }: TProps) {
     setSearchQuery("");
   };
   return (
-    <>
+    <div className={classes.searchBar}>
       <form
         className={classes.root}
         onSubmit={onSubmit}
@@ -59,6 +61,6 @@ export default function Searchbar({ onSearchbarSubmit }: TProps) {
           Search
         </Button>
       </form>
-    </>
+    </div>
   );
 }

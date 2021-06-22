@@ -27,7 +27,7 @@ export const App: React.FC = () => {
     return <Loader />;
   }
   return (
-    <Container fixed>
+    <Container>
       <AppBar />
       <Suspense fallback={<div>Downloading...</div>}>
         <Switch>

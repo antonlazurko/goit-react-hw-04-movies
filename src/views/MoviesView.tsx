@@ -9,6 +9,7 @@ import * as moviesAPI from "../services/movie-api";
 import Searchbar from "../Components/Searchbar/Searchbar";
 import Status from "../services/Status";
 import s from "../views/MoviesView.module.css";
+import { classicNameResolver } from "typescript";
 
 type TSearchQuery = string;
 type TMovie = {
@@ -74,6 +75,11 @@ export default function MoviesView() {
       {status === Status.RESOLVED && (
         <>
           <List>
+            {movies.length < 1 && (
+              <div className={s.listNotification}>
+                No results for your request.
+              </div>
+            )}
             {movies.map((movie) => (
               <ListItem key={movie.id} className={s.item}>
                 <Link

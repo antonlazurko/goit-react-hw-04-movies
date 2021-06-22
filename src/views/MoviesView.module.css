@@ -11,4 +11,9 @@
 
 }
 .title:hover, .title:focus{
-color: black;  }
+    color: black;
+}
+.listNotification{
+    margin-top: 15px;
+    text-align: center;
+}
