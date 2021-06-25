@@ -7,5 +7,8 @@
   font-size: 18px;
 }
 .activeLink {
-  color: #2196f3;
+  color: #cfe0ee;
+}
+.menuListBtn{
+  fill:black !important
 }
