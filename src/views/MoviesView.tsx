@@ -9,7 +9,6 @@ import * as moviesAPI from "../services/movie-api";
 import Searchbar from "../Components/Searchbar/Searchbar";
 import Status from "../services/Status";
 import s from "../views/MoviesView.module.css";
-import { classicNameResolver } from "typescript";
 
 type TSearchQuery = string;
 type TMovie = {

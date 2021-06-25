@@ -24,7 +24,6 @@ const FavoriteMovieView: React.FC = () => {
   const [movies, setMovies] = useState<TMovies[]>([]);
   const location = useLocation();
   const [user] = useAuthState(auth);
-
   const [favoriteMovies, loading, error] = useCollectionData(
     firestore?.collection(`${user?.displayName}`),
     {
@@ -47,29 +46,27 @@ const FavoriteMovieView: React.FC = () => {
     const movie = moviesArr.find(
       (movie) => `${movie.id}` === favoriteMovieEl.movieId
     );
+
     return (
-      <>
-        <ListItem key={favoriteMovieEl.movieId}>
-          <Link
-            to={{
-              pathname: `/movies/${movie?.id}`,
-              state: { from: location },
-            }}
-            className={s.name}
+      <ListItem key={favoriteMovieEl.movieId}>
+        <Link
+          to={{
+            pathname: `/movies/${movie?.id}`,
+            state: { from: location },
+          }}
+          className={s.name}
+        >
+          {movie?.name ?? movie?.title}
+        </Link>
+        <ListItemSecondaryAction>
+          <IconButton
+            aria-label="delete"
+            onClick={() => handleRemoveFavorite(favoriteMovieEl.movieId)}
           >
-            {movie?.name ?? movie?.title}
-          </Link>
-          <ListItemSecondaryAction>
-            <IconButton
-              aria-label="delete"
-              onClick={() => handleRemoveFavorite(favoriteMovieEl.movieId)}
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <hr />
-      </>
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
     );
   };
 

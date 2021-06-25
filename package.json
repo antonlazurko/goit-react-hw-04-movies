@@ -2,7 +2,6 @@
   "name": "goit-react-hw-04-movies",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/antonlazurko/goit-react-hw-04-movies.git",
   "dependencies": {
     "@antonlazurko/auth_form_package": "^3.0.0",
     "@antonlazurko/mylib": "^0.1.0",
