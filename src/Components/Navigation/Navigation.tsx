@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   menu: {
-    marginTop: "10px",
+    marginTop: "15px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
