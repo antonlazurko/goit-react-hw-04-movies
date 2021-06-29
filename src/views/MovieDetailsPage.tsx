@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense, useContext } from "react";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Route, useParams, useLocation, useHistory } from "react-router-dom";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import * as moviesAPI from "../services/movie-api";
@@ -28,18 +29,28 @@ const Cast = lazy(() => import("./Cast" /*webpackChunkName: "Cast" */));
 const Reviews = lazy(
   () => import("./Reviews" /*webpackChunkName: "Reviews" */)
 );
-
 export default function MovieDetailsPage() {
   const { firestore, auth } = useContext(FirebaseContext);
   const [movie, setMovie] = useState<typeof initialState>(initialState);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState("");
   const [user] = useAuthState(auth);
+  const [favoriteMovies] = useCollectionData(
+    firestore?.collection(`${user?.displayName}`),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
 
   const { movieId } = useParams<TParams>();
+  const isMovieInCollection = favoriteMovies?.find(
+    (movie) => movie.movieId === `${movieId}`
+  );
   const { url, path } = useRouteMatch();
+
   const history = useHistory();
   const location = useLocation<LocationState>();
+
   const handleGoBack = () => {
     location?.state?.from
       ? history.push(location.state.from)
@@ -82,9 +93,17 @@ export default function MovieDetailsPage() {
               <ArrowBackIosIcon fontSize="small" />
               Back
             </Button>
-            <Button aria-label="delete" onClick={handleAddToFavorite}>
+            <Button
+              disabled={!user || !!isMovieInCollection}
+              aria-label="delete"
+              onClick={handleAddToFavorite}
+            >
               <AddToPhotosIcon fontSize="small" />
-              Add to favorites
+              {!user
+                ? " Login to enable adding"
+                : !!isMovieInCollection
+                ? " Movie already exist"
+                : " Add to favorites"}
             </Button>
           </div>
           <h2>{movie.title}</h2>

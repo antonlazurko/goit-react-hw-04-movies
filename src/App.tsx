@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import React, { lazy, Suspense, useContext } from "react";
 import AppBar from "./Components/AppBar/";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -6,6 +6,8 @@ import { Container } from "@material-ui/core";
 
 import { FirebaseContext } from "./index";
 import Loader from "./Components/Loader";
+import PrivateRoute from "./Components/AppRoutes/PrivateRoute";
+import PublicRoute from "./Components/AppRoutes/PublicRoute";
 const HomeView = lazy(
   () => import("./views/HomeView" /*webpackChunkName: "HomeView" */)
 );
@@ -31,21 +33,37 @@ export const App: React.FC = () => {
       <AppBar />
       <Suspense fallback={<div>Downloading...</div>}>
         <Switch>
-          <Route exact path="/">
+          <PublicRoute Component={HomeView} exact path="/" />
+          <PublicRoute Component={MoviesView} exact path="/movies" />
+          <PublicRoute Component={MovieDetailsPage} path="/movies/:movieId" />
+          {/* <Route exact path="/">
             <HomeView />
-          </Route>
-          <Route exact path="/movies">
+          </Route> */}
+          {/* <Route exact path="/movies">
             <MoviesView />
-          </Route>
-          <Route path="/movies/:movieId">
+          </Route> */}
+          {/* <Route path="/movies/:movieId">
             <MovieDetailsPage />
-          </Route>
-          <Route exact path="/favorite">
+          </Route> */}
+
+          <PrivateRoute
+            exact
+            path="/favorite"
+            user={user}
+            Component={FavoriteMovieView}
+          />
+          <PublicRoute
+            path="/login"
+            Component={LoginView}
+            redirectTo="/"
+            user={user}
+          />
+          {/* <Route exact path="/favorite">
             {user ? <FavoriteMovieView /> : <Redirect to={"/login"} />}
-          </Route>
-          <Route path="/login">
+          </Route> */}
+          {/* <Route path="/login">
             {!user ? <LoginView /> : <Redirect to={"/"} />}
-          </Route>
+          </Route> */}
         </Switch>
       </Suspense>
     </Container>

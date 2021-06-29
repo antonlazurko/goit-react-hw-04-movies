@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 
 import * as moviesAPI from "../services/movie-api";
 import Status from "../services/Status";
@@ -9,11 +8,13 @@ interface IArtist {
   id: string;
   profile_path: string;
   name: string;
+  character: string;
 }
 export default function Cast({ movieId }: TMovieId) {
   const [cast, setCast] = useState([]);
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState("");
+  console.log(cast);
 
   useEffect(() => {
     setStatus(Status.PENDING);
@@ -37,7 +38,11 @@ export default function Cast({ movieId }: TMovieId) {
           {cast.length === 0 && <p>No cast information</p>}
           {cast.map((artist: IArtist) => (
             <li key={artist.id} className={s.item}>
-              <span className={s.name}>{artist.name}</span>
+              <div className={s.name}>
+                <span className={s.nameDescr}>{artist.name}</span>
+                <span className={s.nameDescr}>played</span>
+                <span className={s.nameDescr}>{artist.character}</span>
+              </div>
               {artist.profile_path && (
                 <img
                   className={s.image}
@@ -52,6 +57,3 @@ export default function Cast({ movieId }: TMovieId) {
     </>
   );
 }
-Cast.propTypes = {
-  movieId: PropTypes.string,
-};
