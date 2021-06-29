@@ -29,7 +29,6 @@ const Cast = lazy(() => import("./Cast" /*webpackChunkName: "Cast" */));
 const Reviews = lazy(
   () => import("./Reviews" /*webpackChunkName: "Reviews" */)
 );
-
 export default function MovieDetailsPage() {
   const { firestore, auth } = useContext(FirebaseContext);
   const [movie, setMovie] = useState<typeof initialState>(initialState);
@@ -100,7 +99,11 @@ export default function MovieDetailsPage() {
               onClick={handleAddToFavorite}
             >
               <AddToPhotosIcon fontSize="small" />
-              Add to favorites
+              {!user
+                ? " Login to enable adding"
+                : !!isMovieInCollection
+                ? " Movie already exist"
+                : " Add to favorites"}
             </Button>
           </div>
           <h2>{movie.title}</h2>

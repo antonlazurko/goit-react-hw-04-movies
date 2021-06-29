@@ -1,7 +1,15 @@
 .movieCard{
     display: flex;
     align-items: center;
+
 }
+@media (max-width: 680px) {
+  .movieCard {
+flex-direction: column;
+/* align-items: stretch; */
+  }
+}
+
 .reliese{
 margin-bottom: 30px;
 font-size: large;
