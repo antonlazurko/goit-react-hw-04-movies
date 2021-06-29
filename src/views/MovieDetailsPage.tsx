@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense, useContext } from "react";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Route, useParams, useLocation, useHistory } from "react-router-dom";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import * as moviesAPI from "../services/movie-api";
@@ -35,11 +36,22 @@ export default function MovieDetailsPage() {
   const [status, setStatus] = useState(Status.IDLE);
   const [error, setError] = useState("");
   const [user] = useAuthState(auth);
+  const [favoriteMovies] = useCollectionData(
+    firestore?.collection(`${user?.displayName}`),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
 
   const { movieId } = useParams<TParams>();
+  const isMovieInCollection = favoriteMovies?.find(
+    (movie) => movie.movieId === `${movieId}`
+  );
   const { url, path } = useRouteMatch();
+
   const history = useHistory();
   const location = useLocation<LocationState>();
+
   const handleGoBack = () => {
     location?.state?.from
       ? history.push(location.state.from)
@@ -82,7 +94,11 @@ export default function MovieDetailsPage() {
               <ArrowBackIosIcon fontSize="small" />
               Back
             </Button>
-            <Button aria-label="delete" onClick={handleAddToFavorite}>
+            <Button
+              disabled={!user || !!isMovieInCollection}
+              aria-label="delete"
+              onClick={handleAddToFavorite}
+            >
               <AddToPhotosIcon fontSize="small" />
               Add to favorites
             </Button>
